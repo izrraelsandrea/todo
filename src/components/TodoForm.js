@@ -1,9 +1,9 @@
 import { useRef, useContext } from "react";
 import classes from "./TodoForm.module.css";
-import PointsContext from "./store/points-context";
+import TodoContext from "./store/todo-context";
 
 const TodoForm = (props) => {
-    const todoCtx = useContext(PointsContext);
+    const todoCtx = useContext(TodoContext);
 
     const todoInputRef = useRef();
     const pointsInputRef = useRef();

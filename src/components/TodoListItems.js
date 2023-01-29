@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import Card from "./UI/Card.js";
 import classes from "./TodoListItems.module.css";
-import PointsContext from "./store/points-context.js";
+import TodoContext from "./store/todo-context.js";
 const TodoListItems = (props) => {
-    const pointsCtx = useContext(PointsContext);
+    const pointsCtx = useContext(TodoContext);
 
    const openItem = classes.list;
    const closeItem = classes.list + ' ' + classes.close;

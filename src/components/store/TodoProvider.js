@@ -1,5 +1,5 @@
 import { useReducer, useState } from "react";
-import PointsContext from "./points-context";
+import TodoContext from "./todo-context";
 
 const defaultPointsState = {
   points: 0,
@@ -65,7 +65,7 @@ const PointsProvider = (props) => {
       points: todoList[toogleTodoindex].points,
     });
   };
-  const pointsContext = {
+  const todoContext = {
     todoList: todoList,
     points: pointsState.points,
     toogleTodo: toogleTodo,
@@ -76,9 +76,10 @@ const PointsProvider = (props) => {
   };
 
   return (
-    <PointsContext.Provider value={pointsContext}>
+  
+    <TodoContext.Provider value={todoContext}>
       {props.children}
-    </PointsContext.Provider>
+    </TodoContext.Provider>
   );
 };
 export default PointsProvider;

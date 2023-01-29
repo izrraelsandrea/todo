@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import classes from "./Header.module.css";
-import PointsContext from "../store/points-context";
+import TodoContext from "../store/todo-context";
 
 const Header = (props) => {
-    const pointsCtx = useContext(PointsContext);
+    const pointsCtx = useContext(TodoContext);
     return (
         <header className={classes.header}>
            <h1> Header </h1>

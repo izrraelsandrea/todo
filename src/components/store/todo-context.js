@@ -1,6 +1,6 @@
 import React from "react";
 
-const PointsContext = React.createContext({
+const TodoContext = React.createContext({
 todoList: [],
 points: 0,
 toogleTodo: (id) => {},
@@ -10,4 +10,4 @@ addPoints: (id) => {},
 removePoints: (points) => {}
 });
 
-export default PointsContext;
+export default TodoContext;
