@@ -4,7 +4,6 @@ import PointsContext from "../store/points-context";
 
 const Header = (props) => {
     const pointsCtx = useContext(PointsContext);
-    console.log(pointsCtx);
     return (
         <header className={classes.header}>
            <h1> Header </h1>

@@ -1,48 +1,84 @@
-import { useReducer } from "react";
+import { useReducer, useState } from "react";
 import PointsContext from "./points-context";
 
-
 const defaultPointsState = {
-    points:0
-}
+  points: 0,
+};
 const pointsReducer = (state, action) => {
-    if (action.type==='ADD'){
-        const TotalPoints = state.points + action.points;
-        console.log('State Points:',state.points);
-        console.log('Action Points:',action.points);
-        console.log('TotalPoints:',TotalPoints);
-        return {points: TotalPoints};
-    }
-    if (action.type==='REMOVE'){
-        const TotalPoints = state.points - action.points;
-        console.log('State Points:',state.points);
-        console.log('Action Points:',action.points);
-        console.log('TotalPoints:',TotalPoints);
-        return {points: TotalPoints};
-        
-    }
-}
+  if (action.type === "ADD") {
+    const TotalPoints = state.points + action.points;
+    return { points: TotalPoints };
+  }
+  if (action.type === "REMOVE") {
+    const TotalPoints = state.points - action.points;
+    return { points: TotalPoints };
+  }
+};
 
-const PointsProvider = props => {
+const PointsProvider = (props) => {
+  const [todoList, setTodoList] = useState([]);
 
-const [pointsState, dispatchPointsAction] = useReducer(pointsReducer,defaultPointsState);
+  const addTodo = (todoData) => {
+    console.log(todoData);
+    setTodoList((prev) => {
+      return [...prev, todoData];
+    });
+  };
+  const toogleTodo = (id) => {
+    const toogleTodoindex = todoList.findIndex((todo) => {
+      return todo.id === id;
+    });
+    setTodoList((prev) => {
+      let newTodoList = [...prev];
 
-    const addPointsHandler = points => {
-        console.log('Adding');
-        dispatchPointsAction({type: 'ADD', points:points});
-    }
-    const removePointsHandler = points => {
-        console.log('Removing');
-        dispatchPointsAction( {type: 'REMOVE', points:points })
-    }
-     const pointsContext = {
-        points: pointsState.points,
-        addPoints: addPointsHandler,
-        removePoints: removePointsHandler,
-     };
+      if (!newTodoList[toogleTodoindex].open) {
+        newTodoList[toogleTodoindex].open = true;
+        removePointsHandler(toogleTodoindex);
+      } else {
+        newTodoList[toogleTodoindex].open = false;
+        addPointsHandler(toogleTodoindex);
+      }
+      return newTodoList;
+    });
+  };
+  const removeTodo = (id) => {
+    const toogleTodoIndex = todoList.findIndex((todo) => todo.id === id);
+    const updatedTodos = todoList.filter((todo) => todo.id !== id);
+    removePointsHandler(toogleTodoIndex);
+    setTodoList(updatedTodos);
+  };
 
-    return <PointsContext.Provider value={pointsContext}>
-        {props.children}
+  const [pointsState, dispatchPointsAction] = useReducer(
+    pointsReducer,
+    defaultPointsState
+  );
+
+  const addPointsHandler = (toogleTodoindex) => {
+    dispatchPointsAction({
+      type: "ADD",
+      points: todoList[toogleTodoindex].points,
+    });
+  };
+  const removePointsHandler = (toogleTodoindex) => {
+    dispatchPointsAction({
+      type: "REMOVE",
+      points: todoList[toogleTodoindex].points,
+    });
+  };
+  const pointsContext = {
+    todoList: todoList,
+    points: pointsState.points,
+    toogleTodo: toogleTodo,
+    addTodo: addTodo,
+    removeTodo: removeTodo,
+    addPoints: addPointsHandler,
+    removePoints: removePointsHandler,
+  };
+
+  return (
+    <PointsContext.Provider value={pointsContext}>
+      {props.children}
     </PointsContext.Provider>
- };
- export default PointsProvider;
+  );
+};
+export default PointsProvider;

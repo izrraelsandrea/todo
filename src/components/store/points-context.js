@@ -1,8 +1,12 @@
 import React from "react";
 
 const PointsContext = React.createContext({
+todoList: [],
 points: 0,
-addPoints: (points) => {},
+toogleTodo: (id) => {},
+removeTodo: (id) => {},
+addTodo: (todo) => {},
+addPoints: (id) => {},
 removePoints: (points) => {}
 });
 

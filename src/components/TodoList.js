@@ -1,15 +1,18 @@
+import { useContext } from "react";
 import TodoListItems from "./TodoListItems";
 import classes from "./TodoList.module.css";
+import PointsContext from "./store/points-context";
+
 const TodoList = (props) => {
-    const closeTodoHandler = (id) => {
-        props.onClose(id);
+  const todoCtx = useContext(PointsContext);
+
+    const toogleTodoHandler = (id) => {
+        todoCtx.toogleTodo(id);
     }
-    const deleteTodoHandler = (id) => {
-      props.onDelete(id);
-    }
+
     return (
       <ul className={classes.ul}>
-        <TodoListItems onDelete={deleteTodoHandler} onClick={closeTodoHandler} data={props.items} />
+        <TodoListItems onClick={toogleTodoHandler} data={todoCtx.todoList} />
       </ul>
     );
 

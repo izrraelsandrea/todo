@@ -1,7 +1,10 @@
-import { useRef } from "react";
+import { useRef, useContext } from "react";
 import classes from "./TodoForm.module.css";
+import PointsContext from "./store/points-context";
 
 const TodoForm = (props) => {
+    const todoCtx = useContext(PointsContext);
+
     const todoInputRef = useRef();
     const pointsInputRef = useRef();
 
@@ -13,7 +16,7 @@ const TodoForm = (props) => {
             points: parseInt(pointsInputRef.current.value),
             open: true
         }
-        props.onAdd(todoData);
+        todoCtx.addTodo(todoData);
         todoInputRef.current.value="";
         pointsInputRef.current.value="";
     }

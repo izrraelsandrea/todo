@@ -11,16 +11,10 @@ const TodoListItems = (props) => {
 
    
    const closeTodoHandler = (item) => {
-    if (item.open){
-        pointsCtx.addPoints(item.points);
-    }else{
-        pointsCtx.removePoints(item.points);
-    }
    props.onClick(item.id);
    }
    const deleteTodoHandler = (item) => {
-    pointsCtx.removePoints(item.points);
-    props.onDelete(item.id);
+    pointsCtx.removeTodo(item.id);
    }
    
    return (
