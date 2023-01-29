@@ -10,7 +10,8 @@ const TodoForm = (props) => {
         let todoData = {
             id: Math.random(),
             description: todoInputRef.current.value,
-            points: pointsInputRef.current.value
+            points: parseInt(pointsInputRef.current.value),
+            open: true
         }
         props.onAdd(todoData);
         todoInputRef.current.value="";

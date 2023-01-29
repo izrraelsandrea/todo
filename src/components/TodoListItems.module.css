@@ -1,4 +1,14 @@
 .list {
 list-style: none;
-font-size: 18px;
+font-size: 15px;
+text-align: center;
+}
+.close {
+text-decoration: line-through;
+}
+.delete {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 10px;
+    text-decoration: underline;
 }
