@@ -15,8 +15,10 @@ const pointsReducer = (state, action) => {
   }
 };
 
-const PointsProvider = (props) => {
+const TodoProvider = (props) => {
   const [todoList, setTodoList] = useState([]);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [todoToEdit, setTodoToEdit] = useState({});
 
   const addTodo = (todoData) => {
     console.log(todoData);
@@ -40,6 +42,26 @@ const PointsProvider = (props) => {
       }
       return newTodoList;
     });
+  };
+  const updateTodo = (newTodoData) => {
+    const updateTodoIndex = todoList.findIndex((todo) => {
+      return todo.id === newTodoData.id;
+    });
+    setTodoList((prev) => {
+      let updateTodoList = [...prev];
+      updateTodoList[updateTodoIndex] = newTodoData;
+      return updateTodoList;
+    });
+    removePointsHandler(updateTodoIndex);
+  };
+  const toogleEditMode = (id) => {
+    if (!id) {
+      setIsEditMode(false);
+    } else {
+      const todoToUpdateHelper = todoList.find((todo) => todo.id === id);
+      setTodoToEdit(todoToUpdateHelper);
+      setIsEditMode(true);
+    }
   };
   const removeTodo = (id) => {
     const toogleTodoIndex = todoList.findIndex((todo) => todo.id === id);
@@ -68,18 +90,21 @@ const PointsProvider = (props) => {
   const todoContext = {
     todoList: todoList,
     points: pointsState.points,
+    todoToEdit: todoToEdit,
+    isEditMode: isEditMode,
     toogleTodo: toogleTodo,
     addTodo: addTodo,
     removeTodo: removeTodo,
     addPoints: addPointsHandler,
     removePoints: removePointsHandler,
+    toogleEditMode: toogleEditMode,
+    updateTodo: updateTodo,
   };
 
   return (
-  
     <TodoContext.Provider value={todoContext}>
       {props.children}
     </TodoContext.Provider>
   );
 };
-export default PointsProvider;
+export default TodoProvider;
